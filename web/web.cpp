@@ -51,19 +51,22 @@ std::thread *WS::startServer() {
                    response,
                std::shared_ptr<SimpleWeb::Server<SimpleWeb::HTTPS>::Request>
                    request) {
+               std::string answer;
           try {
             boost::property_tree::ptree pt;
             read_json(request->content, pt);
             std::stringstream oss;
             write_json(oss, pt);
             API *api = new API(oss.str());
-            std::string answer = api->evaluate();
+            api->ClustersDetected.connect(this, &WS::AcceptClustersDetectedForwarding);
+            answer = api->evaluate();
+            api->ClustersDetected.disconnect(this);
             delete (api);
             *response << "HTTP/1.1 200 OK\r\n"
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
                       << answer;
           } catch (const std::exception &e) {
-            std::string answer = "API breach\n";
+            answer = "API breach";
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: "
                       << answer.length() << "\r\n\r\n"
                       << answer;

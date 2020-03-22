@@ -26,7 +26,7 @@ encrypted2 = bob_box.encrypt(cookie2, encoder=nacl.encoding.Base64Encoder)
 print(encrypted.decode('utf-8'))
 print("Enc: " + encrypted)
 
-url = 'http://localhost:12345/json'
+url = 'https://api.trackcovidcluster.de:12345/json'
 
 myobj = '{"Command":"ClusterSubmission"}'
 
