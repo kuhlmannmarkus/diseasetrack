@@ -76,9 +76,52 @@ std::string API::evaluate() {
     write_json(oss, res);
     result = oss.str();
     return result;
-  } else if (command_s.compare("Some other command") == 0) {
+  } else if (command_s.compare("commacommand") == 0) {
+    boost::property_tree::ptree res = getAnswerSkeleton(pt);
+    boost::property_tree::ptree answer;
+    boost::property_tree::ptree status;
+    boost::property_tree::ptree answervalue;
+    status.put("", "Success");
+    answervalue.put("", "Comma Soft fighting diseases!");
+    answer.push_back(std::make_pair("Status", status));
+    answer.add_child("Mission", answervalue);
+    res.push_back(std::make_pair("Answer", answer));
+    std::stringstream oss;
+    write_json(oss, res);
+    result = oss.str();
+    return result;
     
-  } 
+  } else if (command_s.compare("ClusterSubmission") == 0){
+    boost::property_tree::ptree res = getAnswerSkeleton(pt);
+    boost::property_tree::ptree answer;
+    boost::property_tree::ptree status;
+    boost::property_tree::ptree answervalue;
+    status.put("", "Success");
+    answervalue.put("", "Comma Soft fighting diseases!");
+    answer.push_back(std::make_pair("Status", status));
+    answer.add_child("Mission", answervalue);
+    res.push_back(std::make_pair("Answer", answer));
+    std::stringstream oss;
+    write_json(oss, res);
+    result = oss.str();
+    return result;
+  }
+   else if (command_s.compare("StatePoll") == 0){
+    boost::property_tree::ptree res = getAnswerSkeleton(pt);
+    boost::property_tree::ptree answer;
+    boost::property_tree::ptree status;
+    boost::property_tree::ptree answervalue;
+    status.put("", "Success");
+    answervalue.put("", "Comma Soft fighting diseases!");
+    answer.push_back(std::make_pair("Status", status));
+    answer.add_child("Mission", answervalue);
+    res.push_back(std::make_pair("Answer", answer));
+    std::stringstream oss;
+    write_json(oss, res);
+    result = oss.str();
+    return result;
+
+   }
 }
 
 const std::string API::identify() { return std::string("API"); }

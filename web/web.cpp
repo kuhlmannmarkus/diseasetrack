@@ -118,3 +118,15 @@ std::thread *WS::killServer() {
 }
 
 const std::string WS::identify() { return std::string("WS"); }
+
+WC::WC() {}
+
+WC::~WC() {}
+
+void WC::pushMessage(std::string _message, std::vector<std::string> _keys){
+  std::string json_string = "{\"Command\":\"SendMessage\",\"MessageBody\":\"YOUR MESSAGE HERE\",\"NTRUPubKeyArray\":[\"KEY1TRYTES\",\"KEY2TRYTES\"]}";
+  m_client = new SimpleWeb::Client<SimpleWeb::HTTP>("localhost:1234");
+  m_client->request("POST", "/json", json_string);
+  delete(m_client);
+  return;
+}

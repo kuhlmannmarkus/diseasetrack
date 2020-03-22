@@ -1,8 +1,3 @@
-//
-// Copyright (c) 2019 Markus Kuhlmann
-//
-// Refer to the LICENSE file for licensing information
-//
 #ifndef WEB_H
 #define WEB_H
 
@@ -12,6 +7,7 @@
 
 #include "server_http.hpp"
 #include "server_https.hpp"
+#include "client_http.hpp"
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -62,6 +58,30 @@ private:
   SimpleWeb::Server<SimpleWeb::HTTP> *m_server;
   std::thread *m_server_thread;
   std::thread *m_kill_thread;
+  // Signals
+  // Slots
+protected:
+  // Methods
+  // Members
+  // Signals
+  // Slots
+};
+
+class WC {
+public:
+  // Methods
+  WC();
+  ~WC();
+  void pushMessage(std::string, std::vector<std::string>);
+  // Members
+  // Signals
+  // Slots
+
+private:
+  // Methods
+  // Members
+  SimpleWeb::Client<SimpleWeb::HTTPS> *m_sec_client;
+  SimpleWeb::Client<SimpleWeb::HTTP> *m_client;
   // Signals
   // Slots
 protected:
