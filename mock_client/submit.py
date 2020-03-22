@@ -23,7 +23,8 @@ cookie1 = pksender.encode(encoder=nacl.encoding.Base64Encoder) + " VH0QivWjENisA
 bob_box = Box(sksender, pkserver)
 encrypted = bob_box.encrypt(cookie1, encoder=nacl.encoding.Base64Encoder)
 print("Enc: " + encrypted)
-url = 'http://localhost:12345/json'
+
+url = 'http://api.trackcovidcluster.de:12345/json'
 
 myobj = '{"Command":"ClusterSubmission"}'
 
