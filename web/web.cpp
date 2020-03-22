@@ -89,7 +89,9 @@ std::thread *WS::startServer() {
             std::stringstream oss;
             write_json(oss, pt);
             API *api = new API(oss.str());
+	    api->ClustersDetected.connect(this, &WS::AcceptClustersDetectedForwarding);
             answer = api->evaluate();
+	    api->ClustersDetected.disconnect(this);
             delete (api);
             *response << "HTTP/1.1 200 OK\r\n"
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
@@ -118,6 +120,11 @@ std::thread *WS::killServer() {
 }
 
 const std::string WS::identify() { return std::string("WS"); }
+
+void WS::AcceptClustersDetectedForwarding(std::tuple<std::string,std::vector<std::string>> _clusters){
+  ClustersDetected.emit(_clusters);
+  return;
+}
 
 WC::WC() {}
 

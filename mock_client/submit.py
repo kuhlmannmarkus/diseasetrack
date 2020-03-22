@@ -4,7 +4,7 @@ import json
 import psutil
 import requests
 import nacl.utils
-from nacl.public import PrivateKey, Box
+from nacl.public import PrivateKey, SealedBox
 
 pk = "VH0QivWjENisAcrZGSWkYFsgrcsdaAPuSiXdb9puyUM="
 
@@ -20,17 +20,19 @@ print("Sender PK: " + pksender.encode(encoder=nacl.encoding.Base64Encoder))
 
 cookie1 = pksender.encode(encoder=nacl.encoding.Base64Encoder) + " VH0QivWjENisAcrZGSWkYFsgrcsdaAPuSiXdb9puyUM= " + "ort " +" zeit"
 
-bob_box = Box(sksender, pkserver)
+bob_box = SealedBox(pkserver)
 encrypted = bob_box.encrypt(cookie1, encoder=nacl.encoding.Base64Encoder)
+print(encrypted.decode('utf-8'))
 print("Enc: " + encrypted)
 
-url = 'http://api.trackcovidcluster.de:12345/json'
+url = 'http://localhost:12345/json'
 
 myobj = '{"Command":"ClusterSubmission"}'
 
 x = {
-  "Command": "ClusterSubmission",
-  "Clusters": [encrypted]
+    "Command": "ClusterSubmission",
+    "Clusters": [encrypted],
+    "UUID": pksender.encode(encoder=nacl.encoding.Base64Encoder)
 }
 y = json.dumps(x)
 

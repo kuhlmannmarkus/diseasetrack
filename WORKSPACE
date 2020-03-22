@@ -16,3 +16,9 @@ new_git_repository(
     build_file_content = """cc_library(name = "SimpleWebServer", hdrs = glob(["*.h","*.hpp"]), visibility = ["//visibility:public"])"""
 )
 
+new_git_repository(
+    name = "cpp-base64",
+    commit = "a8aae956a2f07df9aac25b064cf4cd92d56aac45",
+    remote = "https://github.com/ReneNyffenegger/cpp-base64.git",
+    build_file_content = """cc_library(name = "cpp-base64", hdrs = glob(["*.h"]), srcs = ["base64.cpp"], visibility = ["//visibility:public"])"""
+)

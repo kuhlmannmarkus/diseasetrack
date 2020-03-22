@@ -33,12 +33,14 @@ public:
   // Signals
   sigslot::signal1<std::tuple<std::string, std::vector<std::string>>>
       MessageSendRequest;
+  sigslot::signal1<std::tuple<std::string,std::vector<std::string>>> ClustersDetected;
   // Slots
   virtual void AcceptRunModeOrder(int);
   void AcceptMessageSendRequestForwarding(
       std::tuple<std::string, std::vector<std::string>>);
   void AcceptNewTrustedChannelAddedForwarding(std::string);
   void AcceptNewTrustedEndpointAddedForwarding(std::string);
+  void AcceptClustersDetectedForwarding(std::tuple<std::string,std::vector<std::string>>);
 
 private:
   // Methods

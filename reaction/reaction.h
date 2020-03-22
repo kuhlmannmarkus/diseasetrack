@@ -3,6 +3,7 @@
 
 #include "common/defaults.h"
 #include "diseasetrackobject/diseasetrackobject.h"
+#include "base64.h"
 
 #include <array>
 #include <cstdio>
@@ -10,6 +11,9 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+
+#include <sodium.h>
+#include "nacl/crypto_box.h"
 
 class Reaction : public DiseaseTrackObject {
 public:
@@ -20,7 +24,8 @@ public:
   // Signals
   // Slots
   virtual void AcceptRunModeOrder(int);
-
+  void AcceptClusters(std::tuple<std::string,std::vector<std::string>>);
+  
 private:
   // Methods
   virtual const std::string identify();

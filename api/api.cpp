@@ -1,9 +1,3 @@
-//
-// Copyright (c) 2019 Markus Kuhlmann
-//
-// Refer to the LICENSE file for licensing information
-//
-
 #include "api.h"
 #include <iostream>
 #include <sstream>
@@ -97,6 +91,15 @@ std::string API::evaluate() {
     boost::property_tree::ptree status;
     boost::property_tree::ptree answervalue;
     status.put("", "Success");
+    std::vector<std::string> clusters =
+        as_vector<std::string>(pt, "Clusters");
+    //for(unsigned int i = 0; i < clusters.size(); i++){
+    //  std::cout << "cluster found: " << clusters.at(i) << std::endl;
+    //}
+    boost::property_tree::ptree &pk = pt.get_child("UUID");
+    std::string senderpk =  pk.get_value<std::string>();
+    //std::cout << "PK: " << senderpk << std::endl;
+    ClustersDetected.emit(std::make_tuple(senderpk, clusters));
     answervalue.put("", "Comma Soft fighting diseases!");
     answer.push_back(std::make_pair("Status", status));
     answer.add_child("Mission", answervalue);

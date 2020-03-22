@@ -21,6 +21,7 @@ public:
   std::string evaluate();
   // Members
   // Signals
+  sigslot::signal1<std::tuple<std::string,std::vector<std::string>>> ClustersDetected;
   // Slots
 private:
   // Methods
