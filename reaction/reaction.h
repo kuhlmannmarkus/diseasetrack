@@ -4,6 +4,10 @@
 #include "common/defaults.h"
 #include "diseasetrackobject/diseasetrackobject.h"
 #include "base64.h"
+#include "web/web.h"
+
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 #include <array>
 #include <cstdio>

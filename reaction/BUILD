@@ -7,5 +7,6 @@ cc_library(
        "//diseasetrackobject:diseasetrackobject",
        "//common:defaults",
        "@cpp-base64",
+       "//web:web",
     ],
 )
