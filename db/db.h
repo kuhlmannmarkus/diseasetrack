@@ -6,7 +6,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "dirent.h"
+
+typedef unsigned long long UINT64;
 
 class DB{
 public:
@@ -20,22 +21,21 @@ public:
   // Return: vector of all encounters. Each entry containing a tuple of 
   //   puplicKeyContactPerson	std::string
   //   puplicKeyInfectedPerson	std::string
-  //   coordinates longitude	double
-  //   coordinate altitude		double
+  //   coordinate latitude		double
+  //   coordinate longitude		double
   //   timestamp [ms]			UINT64
-  std::vector<std::tuple<std::string,std::string,double,double, UINT64>>  getEncounters(std::string puplicKeyContactPerson);
+  std::vector<std::tuple<std::string,std::string,double,double, UINT64>>  getEncounters(std::string _puplicKeyContactPerson);
 
-  // getEncounters
+  // submitEncounters
   // Submit all encounters of an infected person
   // Input:
   //  vector of all encounters. Each entry containing a tuple of 
   //   puplicKeyContactPerson	std::string
   //   puplicKeyInfectedPerson	std::string
-  //   coordinates longitude	double
-  //   coordinate altitude		double
+  //   coordinate latitude		double
+  //   coordinate longitude		double
   //   timestamp [ms]			UINT64
-  void submitEncounters(std::vector<std::tuple<std::string, std::string, double, double, UINT64>>);
-
+  void submitEncounters(std::vector<std::tuple<std::string, std::string, double, double, UINT64>> _encounters);
 
 private:
   std::vector<std::string> splitString(std::string _stringToBeSplitted, std::string _delimeter);
