@@ -15,6 +15,7 @@ public:
   ~Crypto();
   std::string encrypt(std::string, std::string);
   std::string decrypt(std::string);
+  std::string getPubKey();
 private:
    unsigned char m_sk[crypto_box_SECRETKEYBYTES];
    unsigned char m_pk[crypto_box_PUBLICKEYBYTES];

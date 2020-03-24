@@ -8,6 +8,7 @@ Crypto::Crypto(){
   std::string sk_debase_s = base64_decode(sk_s);
   line = "";
   std::getline(infile, line);
+  infile.close();
   std::string pk_s = line;
   std::string pk_debase_s = base64_decode(pk_s);
   std::copy( sk_debase_s.begin(), sk_debase_s.end(), m_sk);
@@ -45,4 +46,14 @@ std::string Crypto::decrypt(std::string _in){
       result += decrypted[i];
   }
   return result;
+}
+
+std::string Crypto::getPubKey(){
+  std::ifstream infile("./keys.dat");
+  std::string line;
+  std::getline(infile, line);
+  line = "";
+  std::getline(infile, line);
+  infile.close();
+  return line;
 }

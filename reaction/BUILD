@@ -8,5 +8,6 @@ cc_library(
        "//common:defaults",
        "@cpp-base64",
        "//web:web",
+       "//crypto:crypto",
     ],
 )

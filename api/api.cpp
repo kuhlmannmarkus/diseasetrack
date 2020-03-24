@@ -17,7 +17,7 @@ getAnswerSkeleton(boost::property_tree::ptree _req) {
   result.put("AppName",
              boost::dll::program_location().filename().string());
   result.put("API version", "0.1");
-  result.push_back(std::make_pair("request", _req));
+  result.push_back(std::make_pair("Request", _req));
   return result;
 }
 
@@ -28,7 +28,7 @@ boost::property_tree::ptree getAnswerSkeletonForBadRequest() {
   result.put("API version", "0.1");
   boost::property_tree::ptree answer;
   boost::property_tree::ptree status;
-  status.put("", "Malformed request");
+  status.put("", "Malformed Request");
   answer.push_back(std::make_pair("Status", status));
   result.push_back(std::make_pair("Answer", answer));
   return result;
@@ -56,21 +56,7 @@ std::string API::evaluate() {
     result = oss.str();
     return result;
   }
-  if (command_s.compare("Some command") == 0) {
-    boost::property_tree::ptree res = getAnswerSkeleton(pt);
-    boost::property_tree::ptree answer;
-    boost::property_tree::ptree status;
-    boost::property_tree::ptree answervalue;
-    status.put("", "Success");
-    answervalue.put("", "Some value");
-    answer.push_back(std::make_pair("Status", status));
-    answer.add_child("Some key", answervalue);
-    res.push_back(std::make_pair("Answer", answer));
-    std::stringstream oss;
-    write_json(oss, res);
-    result = oss.str();
-    return result;
-  } else if (command_s.compare("ClusterSubmission") == 0){
+  if (command_s.compare("ClusterSubmission") == 0){
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;
     boost::property_tree::ptree status;
@@ -78,14 +64,10 @@ std::string API::evaluate() {
     status.put("", "Success");
     std::vector<std::string> clusters =
         as_vector<std::string>(pt, "Clusters");
-    //for(unsigned int i = 0; i < clusters.size(); i++){
-    //  std::cout << "cluster found: " << clusters.at(i) << std::endl;
-    //}
     boost::property_tree::ptree &pk = pt.get_child("UUID");
     std::string senderpk =  pk.get_value<std::string>();
-    //std::cout << "PK: " << senderpk << std::endl;
     ClustersDetected.emit(std::make_tuple(senderpk, clusters));
-    answervalue.put("", "Comma Soft fighting diseases!");
+    answervalue.put("", "TrackCovidCluster fighting diseases!");
     answer.push_back(std::make_pair("Status", status));
     answer.add_child("Mission", answervalue);
     res.push_back(std::make_pair("Answer", answer));
@@ -100,7 +82,7 @@ std::string API::evaluate() {
     boost::property_tree::ptree status;
     boost::property_tree::ptree answervalue;
     status.put("", "Success");
-    answervalue.put("", "Comma Soft fighting diseases!");
+    answervalue.put("", "TrackCovidCluster fighting diseases!");
     answer.push_back(std::make_pair("Status", status));
     answer.add_child("Mission", answervalue);
     res.push_back(std::make_pair("Answer", answer));
@@ -110,6 +92,32 @@ std::string API::evaluate() {
     return result;
 
    }
+  else if (command_s.compare("RequestServerPubKey") == 0){
+    boost::property_tree::ptree res = getAnswerSkeleton(pt);
+    boost::property_tree::ptree answer;
+    boost::property_tree::ptree status;
+    boost::property_tree::ptree answervalue;
+    status.put("", "Success");
+    Crypto *crypto = new Crypto();
+    std::string pkey = crypto->getPubKey();
+    delete(crypto);
+    answervalue.put("", pkey);
+    answer.push_back(std::make_pair("Status", status));
+    answer.add_child("ServerPubKey", answervalue);
+    res.push_back(std::make_pair("Answer", answer));
+    std::stringstream oss;
+    write_json(oss, res);
+    result = oss.str();
+    return result;
+
+   }
+   else{
+     boost::property_tree::ptree res = getAnswerSkeletonForBadRequest();
+     std::stringstream oss;
+     write_json(oss, res);
+     result = oss.str();
+     return result;
+   }  
 }
 
 const std::string API::identify() { return std::string("API"); }

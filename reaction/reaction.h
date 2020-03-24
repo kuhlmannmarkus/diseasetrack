@@ -5,6 +5,7 @@
 #include "diseasetrackobject/diseasetrackobject.h"
 #include "base64.h"
 #include "web/web.h"
+#include "crypto/crypto.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -17,7 +18,6 @@
 #include <string>
 
 #include <sodium.h>
-#include "nacl/crypto_box.h"
 
 class Reaction : public DiseaseTrackObject {
 public:

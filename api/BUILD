@@ -6,5 +6,6 @@ cc_library(
     deps = [
        "//diseasetrackobject:diseasetrackobject",
        "//common:defaults",
+       "//crypto:crypto",
     ],
 )
