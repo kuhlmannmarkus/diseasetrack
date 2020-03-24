@@ -6,5 +6,6 @@ cc_binary(
             "//common:defaults",
 	    "//web:web",
 	    "//reaction:reaction",
+
     ],
 )

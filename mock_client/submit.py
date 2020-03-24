@@ -18,13 +18,29 @@ pksender = sksender.public_key
 print("Sender SK: " + sksender.encode(encoder=nacl.encoding.Base64Encoder))
 print("Sender PK: " + pksender.encode(encoder=nacl.encoding.Base64Encoder))
 
-cookie1 = pksender.encode(encoder=nacl.encoding.Base64Encoder) + " CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM= " + "50.739004,7.154621 " +"1584894668"
-cookie2 = pksender.encode(encoder=nacl.encoding.Base64Encoder) + " CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM= " + "50.739004,7.154621 " +"1584894669"
-bob_box = SealedBox(pkserver)
-encrypted = bob_box.encrypt(cookie1, encoder=nacl.encoding.Base64Encoder)
-encrypted2 = bob_box.encrypt(cookie2, encoder=nacl.encoding.Base64Encoder)
-print(encrypted.decode('utf-8'))
-print("Enc: " + encrypted)
+cookieobject1 = {
+  "UUID": "CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM=",
+  "Timestamp": 1585054159,
+  "GPSLatitude": 51.489748,
+  "GPSLongitude": 7.236259,
+  "BLEAttenuation": -30
+}
+
+cookieobject2 = {
+  "UUID": "DJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM=",
+  "Timestamp": 1585054160,
+  "GPSLatitude": 51.489747,
+  "GPSLongitude": 7.236260,
+  "BLEAttenuation": -32
+}
+
+cookie1 = json.dumps(cookieobject1)
+cookie2 = json.dumps(cookieobject2)
+
+crypto_box = SealedBox(pkserver)
+
+encrypted = crypto_box.encrypt(cookie1, encoder=nacl.encoding.Base64Encoder)
+encrypted2 = crypto_box.encrypt(cookie2, encoder=nacl.encoding.Base64Encoder)
 
 url = 'https://api.trackcovidcluster.de:12345/json'
 

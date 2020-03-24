@@ -13,9 +13,10 @@ url = 'https://api.trackcovidcluster.de:12345/json'
 
 x = {
     "Command": "StatePoll",
-    "UUID": pksender.encode(encoder=nacl.encoding.Base64Encoder)
+    "UUID": "CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM=",
 }
-y = json.dumps(x)
 
+y = json.dumps(x)
+print(y)
 z = requests.post(url, data = y)
 print(z.text)

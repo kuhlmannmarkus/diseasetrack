@@ -6,6 +6,7 @@
 #include "base64.h"
 #include "web/web.h"
 #include "crypto/crypto.h"
+#include "db/db.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -29,7 +30,7 @@ public:
   // Slots
   virtual void AcceptRunModeOrder(int);
   void AcceptClusters(std::tuple<std::string,std::vector<std::string>>);
-  
+  std::vector<int> getEncountersToInfected(std::string);
 private:
   // Methods
   virtual const std::string identify();

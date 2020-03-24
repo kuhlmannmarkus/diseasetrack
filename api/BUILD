@@ -7,5 +7,6 @@ cc_library(
        "//diseasetrackobject:diseasetrackobject",
        "//common:defaults",
        "//crypto:crypto",
+       "//db:db",
     ],
 )

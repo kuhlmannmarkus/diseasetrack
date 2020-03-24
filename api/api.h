@@ -8,6 +8,7 @@
 #include "common/defaults.h"
 #include "diseasetrackobject/diseasetrackobject.h"
 #include "crypto/crypto.h"
+#include "db/db.h"
 
 #include <algorithm>
 #include <fstream>

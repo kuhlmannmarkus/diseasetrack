@@ -67,9 +67,7 @@ std::string API::evaluate() {
     boost::property_tree::ptree &pk = pt.get_child("UUID");
     std::string senderpk =  pk.get_value<std::string>();
     ClustersDetected.emit(std::make_tuple(senderpk, clusters));
-    answervalue.put("", "TrackCovidCluster fighting diseases!");
     answer.push_back(std::make_pair("Status", status));
-    answer.add_child("Mission", answervalue);
     res.push_back(std::make_pair("Answer", answer));
     std::stringstream oss;
     write_json(oss, res);
@@ -77,14 +75,29 @@ std::string API::evaluate() {
     return result;
   }
    else if (command_s.compare("StatePoll") == 0){
+    boost::property_tree::ptree &pk_tree = pt.get_child("UUID");
+    std::string pk = pk_tree.get_value<std::string>();
+    DB *db = new DB("./");
+    std::vector<int> res2 = db->obscure(pk);
+    delete(db);
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;
     boost::property_tree::ptree status;
     boost::property_tree::ptree answervalue;
+    if(res2.size() != 0){  
+      for(unsigned int i = 0; i < res.size(); i++){
+        boost::property_tree::ptree temp;
+        temp.put("", res2.at(i));
+        answervalue.push_back(std::make_pair("", temp));
+      }
+      answer.add_child("Encounters", answervalue);
+    }
+    std::stringstream streamforenc;
+    write_json(streamforenc, answervalue);
+    std::string stringtoenc = streamforenc.str();
+    logMessage("STRING HERE: " + stringtoenc, "ERR");
     status.put("", "Success");
-    answervalue.put("", "TrackCovidCluster fighting diseases!");
     answer.push_back(std::make_pair("Status", status));
-    answer.add_child("Mission", answervalue);
     res.push_back(std::make_pair("Answer", answer));
     std::stringstream oss;
     write_json(oss, res);

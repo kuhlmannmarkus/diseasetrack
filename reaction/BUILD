@@ -9,5 +9,6 @@ cc_library(
        "@cpp-base64",
        "//web:web",
        "//crypto:crypto",
+       "//db:db",
     ],
 )
