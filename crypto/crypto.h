@@ -20,8 +20,10 @@ public:
   std::string getPubKey();
   std::string hash(std::string);
 private:
-   unsigned char m_sk[crypto_box_SECRETKEYBYTES];
-   unsigned char m_pk[crypto_box_PUBLICKEYBYTES];
+  //unsigned char m_sk[crypto_box_SECRETKEYBYTES];
+  //unsigned char m_pk[crypto_box_PUBLICKEYBYTES];
+  unsigned char m_sk[32];
+  unsigned char m_pk[33];
 };
 
 #endif // CRYPTO_H

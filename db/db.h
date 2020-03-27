@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 typedef unsigned long long UINT64;
 

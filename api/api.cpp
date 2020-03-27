@@ -83,13 +83,14 @@ std::string API::evaluate() {
     std::string pk = pk_tree.get_value<std::string>();
     DB *db = new DB("./");
     std::vector<int> res2 = db->obscure(pk);
-    delete(db);
+    //delete(db);
+    std::cout << "DB in API:" << res2.size() << std::endl;
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;
     boost::property_tree::ptree status;
     boost::property_tree::ptree answervalue;
     if(res2.size() != 0){
-      for(unsigned int i = 0; i < res.size(); i++){
+      for(unsigned int i = 0; i < res2.size(); i++){
         boost::property_tree::ptree temp;
         temp.put("", res2.at(i));
         answervalue.push_back(std::make_pair("", temp));
@@ -99,13 +100,14 @@ std::string API::evaluate() {
     std::stringstream streamforenc;
     write_json(streamforenc, answervalue);
     std::string stringtoenc = streamforenc.str();
-    logMessage("STRING HERE: " + stringtoenc, "ERR");
+    std::cout << "STRING HERE: " <<  stringtoenc << std::endl;;
     status.put("", "Success");
     answer.push_back(std::make_pair("Status", status));
     res.push_back(std::make_pair("Answer", answer));
     std::stringstream oss;
     write_json(oss, res);
     result = oss.str();
+    delete(db);
     return result;
 
    }
@@ -115,22 +117,33 @@ std::string API::evaluate() {
     DB *db = new DB("./");
     std::vector<int> res2 = db->obscure(pk);
     delete(db);
+    for(unsigned int z = 0; z < res2.size(); z++){
+      std::cout << "z: " << z << " cont: " << res2.at(z) << std::endl;
+    }
+    std::cout << "DB in API:" << res2.size() << std::endl;
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;
     boost::property_tree::ptree status;
     boost::property_tree::ptree answervalue;
     if(res2.size() != 0){  
-      for(unsigned int i = 0; i < res.size(); i++){
-        boost::property_tree::ptree temp;
-        temp.put("", res2.at(i));
-        answervalue.push_back(std::make_pair("", temp));
+      for(unsigned int i = 0; i < res2.size(); i++){
+	try {
+	  std::cout << "i: " << i << " cont: " << res2.at(i) << std::endl;
+          boost::property_tree::ptree temp;
+          temp.put("", res2.at(i));
+          answervalue.push_back(std::make_pair("", temp));
+	}
+	catch (const boost::property_tree::ptree_error &e) {
+	  std::cout << "there was some error " << e.what() << std::endl;
+	}
       }
       answer.add_child("Encounters", answervalue);
     }
     std::stringstream streamforenc;
     write_json(streamforenc, answervalue);
     std::string stringtoenc = streamforenc.str();
-    logMessage("STRING HERE: " + stringtoenc, "ERR");
+    //logMessage("STRING HERE: " + stringtoenc, "ERR");
+    std::cout << "STRING HERE: " <<  stringtoenc << std::endl;
     status.put("", "Success");
     answer.push_back(std::make_pair("Status", status));
     res.push_back(std::make_pair("Answer", answer));

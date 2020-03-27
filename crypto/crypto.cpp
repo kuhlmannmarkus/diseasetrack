@@ -20,11 +20,13 @@ Crypto::Crypto(){
   std::getline(infile, line);
   std::string sk_s = line;
   std::string sk_debase_s = base64_decode(sk_s);
-  line = "";
-  std::getline(infile, line);
+  std::cout << "l2:" << sk_debase_s.length() << std::endl;
+  std::string line2;
+  std::getline(infile, line2);
   infile.close();
-  std::string pk_s = line;
+  std::string pk_s = line2;
   std::string pk_debase_s = base64_decode(pk_s);
+  std::cout << "L1:" << pk_debase_s.length() << std::endl;
   std::copy( sk_debase_s.begin(), sk_debase_s.end(), m_sk);
   m_sk[sk_debase_s.length()] = 0;
   std::copy( pk_debase_s.begin(), pk_debase_s.end(), m_pk);
