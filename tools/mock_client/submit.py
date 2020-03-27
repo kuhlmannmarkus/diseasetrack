@@ -31,7 +31,7 @@ cookieobject2 = {
   "Timestamp": 1585054160,
   "GPSLatitude": 51.489747,
   "GPSLongitude": 7.236260,
-  "BLEAttenuation": -32
+  "BLEAttenuation": -32,
 }
 
 cookie1 = json.dumps(cookieobject1)
@@ -43,7 +43,7 @@ encrypted = crypto_box.encrypt(cookie1, encoder=nacl.encoding.Base64Encoder)
 encrypted2 = crypto_box.encrypt(cookie2, encoder=nacl.encoding.Base64Encoder)
 
 url = 'https://api.trackcovidcluster.de:12345/json'
-
+print(socket.gethostbyname("api.trackcovidcluster.de"))
 x = {
     "Command": "ClusterSubmission",
     "Clusters": [encrypted, encrypted2],
