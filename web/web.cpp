@@ -68,6 +68,7 @@ std::thread *WS::startServer() {
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
                       << answer;
           } catch (const std::exception &e) {
+	    std::cout << "ERROR: " << e.what() << std::endl;
             answer = "API breach";
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: "
                       << answer.length() << "\r\n\r\n"
