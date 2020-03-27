@@ -63,7 +63,7 @@ std::vector<std::tuple<std::string, std::string, double, double, UINT64>>  DB::g
   }
 
   mtx.unlock();
-  std::cout << "DBHERE: " << result.size() << std::endl;
+  //std::cout << "DBHERE: " << result.size() << std::endl;
   return result;
 }
 
@@ -133,7 +133,7 @@ std::string DB::getFilenameOfContact(std::string _puplicKeyOfContactPerson)
 std::vector<int> DB::obscure(std::string _pk){
   std::vector<int> result;
   std::vector<std::tuple<std::string, std::string, double, double, UINT64>> res = getEncounters(_pk);
-  std::cout << "While obscuring: " << res.size() << std::endl;
+  //std::cout << "While obscuring: " << res.size() << std::endl;
   for(unsigned int i = 0; i < res.size(); i++){
     result.push_back(std::get<4>(res.at(i))-std::get<4>(res.at(i))%86400);
   }
