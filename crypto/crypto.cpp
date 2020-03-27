@@ -1,5 +1,19 @@
 #include "crypto.h"
 
+std::string string_to_hex(const std::string& input)
+{
+    static const char hex_digits[] = "0123456789ABCDEF";
+
+    std::string output;
+    output.reserve(input.length() * 2);
+    for (unsigned char c : input)
+    {
+        output.push_back(hex_digits[c >> 4]);
+        output.push_back(hex_digits[c & 15]);
+    }
+    return output;
+}
+
 Crypto::Crypto(){
   std::ifstream infile("./keys.dat");
   std::string line;
@@ -56,4 +70,17 @@ std::string Crypto::getPubKey(){
   std::getline(infile, line);
   infile.close();
   return line;
+}
+
+std::string Crypto::hash(std::string _in){
+  std::string digest;
+  CryptoPP::Keccak_512 hash;
+  //std::cout << "Name: " << hash.AlgorithmName() << std::endl;
+  //std::cout << "Digest size: " << hash.DigestSize() << std::endl;
+  //std::cout << "Block size: " << hash.BlockSize() << std::endl;
+  hash.Update((const byte*)_in.data(), _in.size());
+  digest.resize(hash.DigestSize());
+  hash.Final((byte*)&digest[0]);
+  return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()), digest.length());
+  //return string_to_hex(digest);
 }

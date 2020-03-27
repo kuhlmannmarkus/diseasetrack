@@ -5,5 +5,5 @@ cc_binary(
         "//log:log",
         "//web:web",
     ],
-    linkopts = ["-pthread","-lboost_program_options","-lboost_system","-lssl","-lcrypto","-lboost_filesystem","-ldl","-lboost_iostreams","-lsodium"],
+    linkopts = ["-pthread","-lboost_program_options","-lboost_system","-lssl","-lcrypto","-lboost_filesystem","-ldl","-lboost_iostreams","-lsodium","-lcrypto++"],
 )

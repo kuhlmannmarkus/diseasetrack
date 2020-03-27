@@ -32,7 +32,9 @@ int main(int argc, const char *argv[]) {
       "Finished in: " + std::to_string(double(end - begin) / CLOCKS_PER_SEC) +
           "s",
       "INFO");
-  
+  std::string message = "Yoda says, do or do not. There is no try!";
+  LogMessage.emit(identify(), "Message: " + message, "INFO");
+  LogMessage.emit(identify(), "Hash: " + crypto->hash(message), "INFO");
   delete(crypto);
   LogMessage.disconnect(log);
   delete (log);

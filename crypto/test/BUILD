@@ -6,5 +6,5 @@ cc_binary(
 	"//crypto:crypto",
 
     ],
-    linkopts = ["-lsodium"],
+    linkopts = ["-lsodium", "-lcrypto++"],
 )
