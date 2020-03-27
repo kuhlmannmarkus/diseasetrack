@@ -58,24 +58,25 @@ std::string API::evaluate() {
     return result;
   }
   if (command_s.compare("ClusterSubmission") == 0){
+    std::cout << "doing it" << std::endl;
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;
     boost::property_tree::ptree status;
-    boost::property_tree::ptree answervalue;
-    status.put("", "Success");
     std::vector<std::string> clusters =
         as_vector<std::string>(pt, "Clusters");
+    std::cout << "size of cluters: " << clusters.size() << std::endl;
     boost::property_tree::ptree &pk = pt.get_child("UUID");
     std::string senderpk =  pk.get_value<std::string>();
+    std::cout << "UUID: " << senderpk << std::endl;
     ClustersDetected.emit(std::make_tuple(senderpk, clusters));
     status.put("", "Success");
     answer.push_back(std::make_pair("Status", status));
     res.push_back(std::make_pair("Answer", answer));
     std::stringstream oss;
+    std::cout << "Still alive" << std::endl;
     write_json(oss, res);
-    result = oss.str();
     std::cout << "Im here" << std::endl;
-    return result;
+    return oss.str();;
   }
   else if (command_s.compare("SubmitWhereabouts") == 0){
     boost::property_tree::ptree &pk_tree = pt.get_child("UUID");
