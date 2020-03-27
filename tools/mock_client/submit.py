@@ -31,7 +31,7 @@ cookieobject2 = {
   "Timestamp": 1585054160,
   "GPSLatitude": 51.489747,
   "GPSLongitude": 7.236260,
-  "BLEAttenuation": -32,
+  "BLEAttenuation": -32
 }
 
 cookie1 = json.dumps(cookieobject1)

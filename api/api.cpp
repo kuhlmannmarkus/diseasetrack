@@ -68,6 +68,7 @@ std::string API::evaluate() {
     boost::property_tree::ptree &pk = pt.get_child("UUID");
     std::string senderpk =  pk.get_value<std::string>();
     ClustersDetected.emit(std::make_tuple(senderpk, clusters));
+    status.put("", "Success");
     answer.push_back(std::make_pair("Status", status));
     res.push_back(std::make_pair("Answer", answer));
     std::stringstream oss;
