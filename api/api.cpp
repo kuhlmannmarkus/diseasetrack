@@ -73,6 +73,7 @@ std::string API::evaluate() {
     std::stringstream oss;
     write_json(oss, res);
     result = oss.str();
+    std::cout << "Im here" << std::endl;
     return result;
   }
   else if (command_s.compare("SubmitWhereabouts") == 0){
