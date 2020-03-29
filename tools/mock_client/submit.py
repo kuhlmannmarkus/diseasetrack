@@ -19,7 +19,7 @@ print("Sender SK: " + sksender.encode(encoder=nacl.encoding.Base64Encoder))
 print("Sender PK: " + pksender.encode(encoder=nacl.encoding.Base64Encoder))
 
 cookieobject1 = {
-  "UUID": "CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM=",
+  "UUID": "7lAh57Wd+Mj+yDZuM5NXBIg8WgY7ivGAyWdhcik4s3c=",
   "Timestamp": 1585054159,
   "GPSLatitude": 51.489748,
   "GPSLongitude": 7.236259,

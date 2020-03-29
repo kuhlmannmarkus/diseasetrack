@@ -139,3 +139,15 @@ std::vector<int> DB::obscure(std::string _pk){
   }
   return result;
 }
+
+std::vector<std::string> DB::getBLEUUIDs(){
+  std::vector<std::string> result;
+  result.clear();
+  std::ifstream in("./UUIDs.dat");
+  std::string str;
+  while (std::getline(in, str)){
+    if(str.size() > 0)
+      result.push_back(str);
+  }
+  return result;
+}

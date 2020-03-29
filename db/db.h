@@ -38,6 +38,7 @@ public:
   //   timestamp [ms]			UINT64
   void submitEncounters(std::vector<std::tuple<std::string, std::string, double, double, UINT64>> _encounters);
   std::vector<int> obscure(std::string);
+  std::vector<std::string> getBLEUUIDs();
 private:
   std::vector<std::string> splitString(std::string _stringToBeSplitted, std::string _delimeter);
   std::string getFilenameOfContact(std::string _puplicKeyOfContactPerson);
