@@ -3,6 +3,7 @@
 #include <ctime>
 #include <signal.h>
 #include <thread>
+#include "base64.h"
 
 sigslot::signal3<std::string, std::string, std::string> LogMessage;
 
@@ -35,6 +36,9 @@ int main(int argc, const char *argv[]) {
   std::string message = "Yoda says, do or do not. There is no try!";
   LogMessage.emit(identify(), "Message: " + message, "INFO");
   LogMessage.emit(identify(), "Hash: " + crypto->hash(message), "INFO");
+  LogMessage.emit(identify(), "Base64 encoded message: " + base64_encode(reinterpret_cast<const unsigned char *>(message.c_str()), message.length()), "INFO");
+  std::string crypt = crypto->encrypt(message, crypto->getPubKey());
+  LogMessage.emit(identify(), "Encrypted message in base64: " + base64_encode(reinterpret_cast<const unsigned char *>(crypt.c_str()), crypt.length()), "INFO");
   delete(crypto);
   LogMessage.disconnect(log);
   delete (log);

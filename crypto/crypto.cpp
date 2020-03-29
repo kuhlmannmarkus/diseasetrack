@@ -37,7 +37,7 @@ Crypto::~Crypto(){
 
 std::string Crypto::encrypt(std::string _in, std::string _pubkey){
   std::string result = "";
-  unsigned char recipient_pk[crypto_box_PUBLICKEYBYTES];
+  unsigned char recipient_pk[crypto_box_PUBLICKEYBYTES+1];
   std::string recipient_pk_s_debase = base64_decode(_pubkey);
   std::copy(recipient_pk_s_debase.begin(), recipient_pk_s_debase.end(), recipient_pk);
   recipient_pk[recipient_pk_s_debase.length()] = 0;
@@ -72,13 +72,13 @@ std::string Crypto::getPubKey(){
 
 std::string Crypto::hash(std::string _in){
   std::string digest;
-  CryptoPP::Keccak_512 hash;
+  CryptoPP::SHA3_256 hash;
   //std::cout << "Name: " << hash.AlgorithmName() << std::endl;
   //std::cout << "Digest size: " << hash.DigestSize() << std::endl;
   //std::cout << "Block size: " << hash.BlockSize() << std::endl;
   hash.Update((const byte*)_in.data(), _in.size());
   digest.resize(hash.DigestSize());
   hash.Final((byte*)&digest[0]);
-  return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()), digest.length());
-  //return string_to_hex(digest);
+  //return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()), digest.length());
+  return string_to_hex(digest);
 }

@@ -4,7 +4,7 @@
 #include "base64.h"
 #include <sodium.h>
 #include "cryptopp/cryptlib.h"
-#include "cryptopp/keccak.h"
+#include "cryptopp/sha3.h"
 
 #include <string>
 #include <fstream>
