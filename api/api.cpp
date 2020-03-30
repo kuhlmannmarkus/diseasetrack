@@ -100,7 +100,9 @@ std::string API::evaluate() {
     std::string pk = pk_tree.get_value<std::string>();
     DB *db = new DB("./");
     Crypto *crypto = new Crypto();
+    //std::cout << crypto->trunchash(base64_decode(pk)) << std::endl;
     std::vector<int> res2 = db->obscure(crypto->trunchash(base64_decode(pk)));
+    //std::cout << res2.size() << std::endl;
     delete(crypto);
     delete(db);
     boost::property_tree::ptree res = getAnswerSkeleton(pt);

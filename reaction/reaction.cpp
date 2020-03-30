@@ -38,7 +38,7 @@ void Reaction::AcceptClusters(std::tuple<std::string,std::vector<std::string>> _
       //float GPSLatitude = GPSLatitude_tree.get_value<float>();
       //boost::property_tree::ptree &GPSLongitude_tree = pt.get_child("GPSLongitude");
       //float GPSLongitude = GPSLongitude_tree.get_value<float>();
-      std::tuple<std::string, std::string, UINT64> temp = std::make_tuple(UUID, std::get<0>(_clusters), Timestamp);
+      std::tuple<std::string, std::string, UINT64> temp = std::make_tuple(UUID, crypto->trunchashbase64(base64_decode(std::get<0>(_clusters))), Timestamp);
       toDB.push_back(temp);
       logMessage("UUID: "+ UUID, "INFO");
       //logMessage("GPSLat: "+ std::to_string(GPSLatitude), "INFO");
@@ -68,9 +68,8 @@ void Reaction::AcceptClusters(std::tuple<std::string,std::vector<std::string>> _
   
   boost::property_tree::ptree arraypart;
   boost::property_tree::ptree uuid;
-  Crypto *nc = new Crypto();
-  uuid.put("", nc->trunchashbase64(base64_decode(std::get<0>(_clusters))));
-  delete(nc);
+  uuid.put("", crypto->trunchashbase64(base64_decode(std::get<0>(_clusters))));
+  delete(crypto);
   arraypart.add_child("UUID", uuid);
   arraypart.add_child("Clusters", clusterarray);
   message.add_child("MessageBody", arraypart);

@@ -29,8 +29,8 @@ std::vector<std::tuple<std::string, std::string, UINT64>>  DB::getEncounters(std
 {
   std::vector<std::tuple<std::string, std::string, UINT64>> result;
 
-  std::string path = getFilenameOfContact(_puplicKeyContactPerson);
-
+  std::string path = _puplicKeyContactPerson + ".db";//getFilenameOfContact(_puplicKeyContactPerson);
+  //std::cout << "HERE: " << path << std::endl;
   mtx.lock();
 
   std::ifstream infile(path.c_str(), std::ios::in);
@@ -61,7 +61,7 @@ std::vector<std::tuple<std::string, std::string, UINT64>>  DB::getEncounters(std
 		//Set values into tuple
 		std::get<0>(temp) = tokens[0]; // contact
 		std::get<1>(temp) = tokens[1]; // infected
-		std::get<2>(temp) = std::stoull(tokens[4].c_str());	// timestamp
+		std::get<2>(temp) = std::stoull(tokens[2].c_str());	// timestamp
 
 		//Add tuple to result vector
 		result.insert(result.begin(), temp);
