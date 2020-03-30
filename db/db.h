@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "base64.h"
 
 typedef unsigned long long UINT64;
 
@@ -25,7 +26,7 @@ public:
   //   coordinate latitude		double
   //   coordinate longitude		double
   //   timestamp [ms]			UINT64
-  std::vector<std::tuple<std::string,std::string,double,double, UINT64>>  getEncounters(std::string _puplicKeyContactPerson);
+  std::vector<std::tuple<std::string,std::string,UINT64>>  getEncounters(std::string _puplicKeyContactPerson);
 
   // submitEncounters
   // Submit all encounters of an infected person
@@ -33,10 +34,8 @@ public:
   //  vector of all encounters. Each entry containing a tuple of 
   //   puplicKeyContactPerson	std::string
   //   puplicKeyInfectedPerson	std::string
-  //   coordinate latitude		double
-  //   coordinate longitude		double
   //   timestamp [ms]			UINT64
-  void submitEncounters(std::vector<std::tuple<std::string, std::string, double, double, UINT64>> _encounters);
+  void submitEncounters(std::vector<std::tuple<std::string, std::string, UINT64>> _encounters);
   std::vector<int> obscure(std::string);
   std::vector<std::string> getBLEUUIDs();
 private:

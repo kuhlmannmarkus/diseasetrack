@@ -31,7 +31,6 @@ public:
   // Slots
   virtual void AcceptRunModeOrder(int);
   void AcceptClusters(std::tuple<std::string,std::vector<std::string>>);
-  std::vector<int> getEncountersToInfected(std::string);
 private:
   // Methods
   virtual const std::string identify();

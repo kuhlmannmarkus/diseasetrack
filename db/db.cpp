@@ -1,6 +1,20 @@
 #include "db.h"
 #include <iterator>
 
+std::string str_to_hex(const std::string& input)
+{
+    static const char hex_digits[] = "0123456789ABCDEF";
+
+    std::string output;
+    output.reserve(input.length() * 2);
+    for (unsigned char c : input)
+    {
+        output.push_back(hex_digits[c >> 4]);
+        output.push_back(hex_digits[c & 15]);
+    }
+    return output;
+}
+
 //############################################################################################################
 DB::DB(std::string _path, std::string _fileEnding) :
   m_path(_path),
@@ -11,9 +25,9 @@ DB::DB(std::string _path, std::string _fileEnding) :
 DB::~DB() {}
 
 //############################################################################################################
-std::vector<std::tuple<std::string, std::string, double, double, UINT64>>  DB::getEncounters(std::string _puplicKeyContactPerson)
+std::vector<std::tuple<std::string, std::string, UINT64>>  DB::getEncounters(std::string _puplicKeyContactPerson)
 {
-  std::vector<std::tuple<std::string, std::string, double, double, UINT64>> result;
+  std::vector<std::tuple<std::string, std::string, UINT64>> result;
 
   std::string path = getFilenameOfContact(_puplicKeyContactPerson);
 
@@ -35,7 +49,7 @@ std::vector<std::tuple<std::string, std::string, double, double, UINT64>>  DB::g
 	std::vector<std::string> lines = splitString(str, "\n");
 
 	// Fill result
-	std::tuple<std::string, std::string, double, double, UINT64> temp;
+	std::tuple<std::string, std::string, UINT64> temp;
 
 	for (size_t i = 0; i < lines.size(); i++)
 	{ 
@@ -47,9 +61,7 @@ std::vector<std::tuple<std::string, std::string, double, double, UINT64>>  DB::g
 		//Set values into tuple
 		std::get<0>(temp) = tokens[0]; // contact
 		std::get<1>(temp) = tokens[1]; // infected
-		std::get<2>(temp) = ::atof(tokens[2].c_str());	// latitude
-		std::get<3>(temp) = ::atof(tokens[3].c_str());		// longitude
-		std::get<4>(temp) = std::stoull(tokens[4].c_str());	// timestamp
+		std::get<2>(temp) = std::stoull(tokens[4].c_str());	// timestamp
 
 		//Add tuple to result vector
 		result.insert(result.begin(), temp);
@@ -68,7 +80,7 @@ std::vector<std::tuple<std::string, std::string, double, double, UINT64>>  DB::g
 }
 
 //############################################################################################################
-void DB::submitEncounters(std::vector<std::tuple<std::string, std::string, double, double, UINT64>> _encounters)
+void DB::submitEncounters(std::vector<std::tuple<std::string, std::string, UINT64>> _encounters)
 {
   for(size_t i = 0; i < _encounters.size(); i++){
     std::string path = getFilenameOfContact(std::get<0>(_encounters.at(i)));
@@ -81,14 +93,8 @@ void DB::submitEncounters(std::vector<std::tuple<std::string, std::string, doubl
     // Write puplicKeyInfectedPerson
     outfile << std::get<1>(_encounters.at(i));
     outfile << " ";
-    // Write latitude
-    outfile << std::get<2>(_encounters.at(i));
-	outfile << " ";
-    // Write longitude
-	outfile << std::get<3>(_encounters.at(i));
-	outfile << " ";
     // Write timestamp
-	outfile << std::get<4>(_encounters.at(i));
+	outfile << std::get<2>(_encounters.at(i));
 
     outfile << std::endl;
     outfile.close();
@@ -120,22 +126,23 @@ std::vector<std::string> DB::splitString(std::string _stringToBeSplitted, std::s
 //############################################################################################################
 std::string DB::getFilenameOfContact(std::string _puplicKeyOfContactPerson)
 {
-  std::hash<std::string> hasher;
+  //std::hash<std::string> hasher;
 
-  std::size_t hash = hasher(_puplicKeyOfContactPerson);
-
-  std::string result = m_path.c_str() + std::to_string(hash) + ".db";
-
+  //std::size_t hash = hasher(_puplicKeyOfContactPerson);
+  std::string debase = base64_decode(_puplicKeyOfContactPerson);
+  std::string hex = str_to_hex(debase);
+  //std::string result = m_path.c_str() + std::to_string(hash) + ".db";
+  std::string result = hex + ".db";
   return result;
 }
 //############################################################################################################
 
 std::vector<int> DB::obscure(std::string _pk){
   std::vector<int> result;
-  std::vector<std::tuple<std::string, std::string, double, double, UINT64>> res = getEncounters(_pk);
+  std::vector<std::tuple<std::string, std::string, UINT64>> res = getEncounters(_pk);
   //std::cout << "While obscuring: " << res.size() << std::endl;
   for(unsigned int i = 0; i < res.size(); i++){
-    result.push_back(std::get<4>(res.at(i))-std::get<4>(res.at(i))%86400);
+    result.push_back(std::get<2>(res.at(i))-std::get<2>(res.at(i))%86400);
   }
   return result;
 }

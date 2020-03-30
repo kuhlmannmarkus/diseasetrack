@@ -99,7 +99,9 @@ std::string API::evaluate() {
     boost::property_tree::ptree &pk_tree = pt.get_child("UUID");
     std::string pk = pk_tree.get_value<std::string>();
     DB *db = new DB("./");
-    std::vector<int> res2 = db->obscure(pk);
+    Crypto *crypto = new Crypto();
+    std::vector<int> res2 = db->obscure(crypto->trunchash(base64_decode(pk)));
+    delete(crypto);
     delete(db);
     boost::property_tree::ptree res = getAnswerSkeleton(pt);
     boost::property_tree::ptree answer;

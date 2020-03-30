@@ -10,6 +10,7 @@
 #include "diseasetrackobject/diseasetrackobject.h"
 #include "crypto/crypto.h"
 #include "db/db.h"
+#include "base64.h"
 
 #include <algorithm>
 #include <fstream>

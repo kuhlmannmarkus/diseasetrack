@@ -82,3 +82,21 @@ std::string Crypto::hash(std::string _in){
   //return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()), digest.length());
   return string_to_hex(digest);
 }
+
+std::string Crypto::trunchash(std::string _in){
+  std::string digest;
+  CryptoPP::SHA3_256 hash;
+  hash.Update((const byte*)_in.data(), _in.size());
+  digest.resize(hash.DigestSize()/2);
+  hash.TruncatedFinal((byte*)&digest[0], digest.size());
+  return string_to_hex(digest);
+}
+
+std::string Crypto::trunchashbase64(std::string _in){
+  std::string digest;
+  CryptoPP::SHA3_256 hash;
+  hash.Update((const byte*)_in.data(), _in.size());
+  digest.resize(hash.DigestSize()/2);
+  hash.TruncatedFinal((byte*)&digest[0], digest.size());
+  return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()), digest.length());
+}

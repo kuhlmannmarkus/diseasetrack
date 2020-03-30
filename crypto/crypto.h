@@ -19,6 +19,8 @@ public:
   std::string decrypt(std::string);
   std::string getPubKey();
   std::string hash(std::string);
+  std::string trunchash(std::string);
+  std::string trunchashbase64(std::string);
 private:
   //unsigned char m_sk[crypto_box_SECRETKEYBYTES];
   //unsigned char m_pk[crypto_box_PUBLICKEYBYTES];

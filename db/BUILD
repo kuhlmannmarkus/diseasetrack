@@ -4,7 +4,7 @@ cc_library(
     hdrs = ["db.h"],
     visibility = ["//visibility:public"],
     deps = [
-    
+      "@cpp-base64",    
     ],
     defines = [
     
