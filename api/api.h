@@ -1,16 +1,16 @@
-//TrackCOVIDCluster
+// TrackCOVIDCluster
 #ifndef API_H
 #define API_H
 
+#include <boost/dll.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/dll.hpp>
 
+#include "base64.h"
 #include "common/defaults.h"
-#include "diseasetrackobject/diseasetrackobject.h"
 #include "crypto/crypto.h"
 #include "db/db.h"
-#include "base64.h"
+#include "diseasetrackobject/diseasetrackobject.h"
 
 #include <algorithm>
 #include <fstream>
@@ -25,7 +25,8 @@ public:
   std::string evaluate();
   // Members
   // Signals
-  sigslot::signal1<std::tuple<std::string,std::vector<std::string>>> ClustersDetected;
+  sigslot::signal1<std::tuple<std::string, std::vector<std::string>>>
+      ClustersDetected;
   // Slots
 private:
   // Methods

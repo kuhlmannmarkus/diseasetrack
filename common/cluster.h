@@ -4,12 +4,12 @@
 #include "base64.h"
 #include <string>
 
-class Cluster{
+class Cluster {
 public:
   Cluster();
   ~Cluster();
-private:
 
+private:
 };
 
 #endif // CLUSTER_H

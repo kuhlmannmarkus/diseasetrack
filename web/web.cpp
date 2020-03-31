@@ -1,10 +1,10 @@
-//TrackCOVIDCluster
+// TrackCOVIDCluster
 #include "web.h"
 
 WS::WS() {}
 
-WS::WS(int _in, std::string _mode, std::string _pubKey,
-            std::string _privKey, std::string _caPubKey) {
+WS::WS(int _in, std::string _mode, std::string _pubKey, std::string _privKey,
+       std::string _caPubKey) {
   m_sec_server = NULL;
   m_server = NULL;
   m_mode = _mode; // TODO There is no mode anymore
@@ -52,14 +52,15 @@ std::thread *WS::startServer() {
                    response,
                std::shared_ptr<SimpleWeb::Server<SimpleWeb::HTTPS>::Request>
                    request) {
-               std::string answer;
+          std::string answer;
           try {
             boost::property_tree::ptree pt;
             read_json(request->content, pt);
             std::stringstream oss;
             write_json(oss, pt);
             API *api = new API(oss.str());
-            api->ClustersDetected.connect(this, &WS::AcceptClustersDetectedForwarding);
+            api->ClustersDetected.connect(
+                this, &WS::AcceptClustersDetectedForwarding);
             answer = api->evaluate();
             api->ClustersDetected.disconnect(this);
             delete (api);
@@ -93,9 +94,10 @@ std::thread *WS::startServer() {
             std::stringstream oss;
             write_json(oss, pt);
             API *api = new API(oss.str());
-	    api->ClustersDetected.connect(this, &WS::AcceptClustersDetectedForwarding);
+            api->ClustersDetected.connect(
+                this, &WS::AcceptClustersDetectedForwarding);
             answer = api->evaluate();
-	    api->ClustersDetected.disconnect(this);
+            api->ClustersDetected.disconnect(this);
             delete (api);
             *response << "HTTP/1.1 200 OK\r\n"
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
@@ -125,7 +127,8 @@ std::thread *WS::killServer() {
 
 const std::string WS::identify() { return std::string("WS"); }
 
-void WS::AcceptClustersDetectedForwarding(std::tuple<std::string,std::vector<std::string>> _clusters){
+void WS::AcceptClustersDetectedForwarding(
+    std::tuple<std::string, std::vector<std::string>> _clusters) {
   ClustersDetected.emit(_clusters);
   return;
 }
@@ -134,10 +137,9 @@ WC::WC() {}
 
 WC::~WC() {}
 
-void WC::pushMessage(std::string _message, std::vector<std::string> _keys){
-  std::string json_string = "{\"Command\":\"SendMessage\",\"MessageBody\":\"YOUR MESSAGE HERE\",\"NTRUPubKeyArray\":[\"KEY1TRYTES\",\"KEY2TRYTES\"]}";
+void WC::pushMessage(std::string _message) {
   m_client = new SimpleWeb::Client<SimpleWeb::HTTP>("localhost:1234");
   m_client->request("POST", "/json", _message);
-  delete(m_client);
+  delete (m_client);
   return;
 }

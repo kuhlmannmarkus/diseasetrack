@@ -1,4 +1,4 @@
-//TrackCOVIDCluster
+// TrackCOVIDCluster
 #ifndef WEB_H
 #define WEB_H
 
@@ -6,9 +6,9 @@
 #include "common/defaults.h"
 #include "diseasetrackobject/diseasetrackobject.h"
 
+#include "client_http.hpp"
 #include "server_http.hpp"
 #include "server_https.hpp"
-#include "client_http.hpp"
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -16,11 +16,11 @@
 #include <future>
 
 #include <chrono>
+#include <ctime>
 #include <functional>
+#include <iomanip>
 #include <sstream>
 #include <thread>
-#include <ctime>
-#include <iomanip>
 
 class WS : public DiseaseTrackObject {
 public:
@@ -34,14 +34,16 @@ public:
   // Signals
   sigslot::signal1<std::tuple<std::string, std::vector<std::string>>>
       MessageSendRequest;
-  sigslot::signal1<std::tuple<std::string,std::vector<std::string>>> ClustersDetected;
+  sigslot::signal1<std::tuple<std::string, std::vector<std::string>>>
+      ClustersDetected;
   // Slots
   virtual void AcceptRunModeOrder(int);
   void AcceptMessageSendRequestForwarding(
       std::tuple<std::string, std::vector<std::string>>);
   void AcceptNewTrustedChannelAddedForwarding(std::string);
   void AcceptNewTrustedEndpointAddedForwarding(std::string);
-  void AcceptClustersDetectedForwarding(std::tuple<std::string,std::vector<std::string>>);
+  void AcceptClustersDetectedForwarding(
+      std::tuple<std::string, std::vector<std::string>>);
 
 private:
   // Methods
@@ -75,7 +77,7 @@ public:
   // Methods
   WC();
   ~WC();
-  void pushMessage(std::string, std::vector<std::string>);
+  void pushMessage(std::string);
   // Members
   // Signals
   // Slots

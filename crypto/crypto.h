@@ -2,16 +2,16 @@
 #define CRYPTO_H
 
 #include "base64.h"
-#include <sodium.h>
 #include "cryptopp/cryptlib.h"
 #include "cryptopp/sha3.h"
+#include <sodium.h>
 
-#include <string>
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 
-class Crypto{
+class Crypto {
 public:
   Crypto();
   ~Crypto();
@@ -21,9 +21,10 @@ public:
   std::string hash(std::string);
   std::string trunchash(std::string);
   std::string trunchashbase64(std::string);
+
 private:
-  //unsigned char m_sk[crypto_box_SECRETKEYBYTES];
-  //unsigned char m_pk[crypto_box_PUBLICKEYBYTES];
+  // unsigned char m_sk[crypto_box_SECRETKEYBYTES];
+  // unsigned char m_pk[crypto_box_PUBLICKEYBYTES];
   unsigned char m_sk[32];
   unsigned char m_pk[33];
 };

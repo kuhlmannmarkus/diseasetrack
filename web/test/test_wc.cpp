@@ -14,7 +14,7 @@ volatile bool killswitch = false;
 void signal_handler(int s) {
   if (s == 2) {
     killswitch = true;
-    //exit(-1);
+    // exit(-1);
   }
 }
 
@@ -31,12 +31,11 @@ int main(int argc, const char *argv[]) {
   LogMessage.emit(identify(), "Starting...", "INFO");
   RunModeOrder.emit(2);
   std::string message = "";
-  std::vector<std::string> keys;
-  wc->pushMessage(message, keys);
+  wc->pushMessage(message);
   while (!killswitch) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
-  delete(wc);
+  delete (wc);
   clock_t end = clock();
   LogMessage.emit(
       identify(),

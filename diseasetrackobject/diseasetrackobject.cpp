@@ -12,14 +12,15 @@ const std::string DiseaseTrackObject::identify() {
   return std::string("DiseaseTrackObject");
 }
 
-void DiseaseTrackObject::logMessage(std::string _message, std::string _severity) {
+void DiseaseTrackObject::logMessage(std::string _message,
+                                    std::string _severity) {
   LogMessage.emit(identify(), _message, _severity);
   return;
 }
 
 void DiseaseTrackObject::AcceptLogMessagePassthrough(std::string _from,
-                                                 std::string _message,
-                                                 std::string _severity) {
+                                                     std::string _message,
+                                                     std::string _severity) {
   LogMessage.emit(_from, _message, _severity);
   return;
 }

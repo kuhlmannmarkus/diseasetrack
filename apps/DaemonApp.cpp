@@ -1,12 +1,12 @@
-#include <boost/program_options.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/program_options.hpp>
 #include <iostream>
 #include <signal.h>
 #include <thread>
 
 #include "log/log.h"
-#include "web/web.h"
 #include "reaction/reaction.h"
+#include "web/web.h"
 
 #include "common/defaults.h"
 
@@ -41,8 +41,7 @@ int main(int argc, const char *argv[]) {
                            &DiseaseTrackObject::AcceptRunModeOrder);
   Reaction *reaction = new Reaction();
   reaction->LogMessage.connect(log, &Log::AcceptLogMessage);
-  ws->ClustersDetected.connect(reaction,
-                           &Reaction::AcceptClusters);
+  ws->ClustersDetected.connect(reaction, &Reaction::AcceptClusters);
   SendRunModeOrder.emit(2);
   LogMessage.emit(identify(), "Started", "INFO");
   while (!killswitch) {
@@ -56,7 +55,7 @@ int main(int argc, const char *argv[]) {
   ws->LogMessage.disconnect(log);
   ws->ClustersDetected.disconnect(reaction);
   reaction->LogMessage.disconnect(log);
-  delete(reaction);
+  delete (reaction);
   delete (ws);
   LogMessage.disconnect(log);
   delete (log);

@@ -1,13 +1,13 @@
-//TrackCOVIDCluster
+// TrackCOVIDCluster
 #ifndef REACTION_H
 #define REACTION_H
 
-#include "common/defaults.h"
-#include "diseasetrackobject/diseasetrackobject.h"
 #include "base64.h"
-#include "web/web.h"
+#include "common/defaults.h"
 #include "crypto/crypto.h"
 #include "db/db.h"
+#include "diseasetrackobject/diseasetrackobject.h"
+#include "web/web.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -30,7 +30,8 @@ public:
   // Signals
   // Slots
   virtual void AcceptRunModeOrder(int);
-  void AcceptClusters(std::tuple<std::string,std::vector<std::string>>);
+  void AcceptClusters(std::tuple<std::string, std::vector<std::string>>);
+
 private:
   // Methods
   virtual const std::string identify();

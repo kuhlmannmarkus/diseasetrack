@@ -1,17 +1,17 @@
 #ifndef DB_H
 #define DB_H
 
+#include "base64.h"
+#include <fstream>
+#include <iostream>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include "base64.h"
 
 typedef unsigned long long UINT64;
 
-class DB{
+class DB {
 public:
   DB(std::string _path, std::string _fileEnding = ".db");
   ~DB();
@@ -19,27 +19,32 @@ public:
   // getEncounters
   // Get all encounters of an contact person
   // Input:
-  //  puplicKeyContactPerson - puplic key of the contact person which wants to know its encounters
-  // Return: vector of all encounters. Each entry containing a tuple of 
+  //  puplicKeyContactPerson - puplic key of the contact person which wants to
+  //  know its encounters
+  // Return: vector of all encounters. Each entry containing a tuple of
   //   puplicKeyContactPerson	std::string
   //   puplicKeyInfectedPerson	std::string
   //   coordinate latitude		double
   //   coordinate longitude		double
   //   timestamp [ms]			UINT64
-  std::vector<std::tuple<std::string,std::string,UINT64>>  getEncounters(std::string _puplicKeyContactPerson);
+  std::vector<std::tuple<std::string, std::string, UINT64>>
+  getEncounters(std::string _puplicKeyContactPerson);
 
   // submitEncounters
   // Submit all encounters of an infected person
   // Input:
-  //  vector of all encounters. Each entry containing a tuple of 
+  //  vector of all encounters. Each entry containing a tuple of
   //   puplicKeyContactPerson	std::string
   //   puplicKeyInfectedPerson	std::string
   //   timestamp [ms]			UINT64
-  void submitEncounters(std::vector<std::tuple<std::string, std::string, UINT64>> _encounters);
+  void submitEncounters(
+      std::vector<std::tuple<std::string, std::string, UINT64>> _encounters);
   std::vector<int> obscure(std::string);
   std::vector<std::string> getBLEUUIDs();
+
 private:
-  std::vector<std::string> splitString(std::string _stringToBeSplitted, std::string _delimeter);
+  std::vector<std::string> splitString(std::string _stringToBeSplitted,
+                                       std::string _delimeter);
   std::string getFilenameOfContact(std::string _puplicKeyOfContactPerson);
 
   std::string m_path;
