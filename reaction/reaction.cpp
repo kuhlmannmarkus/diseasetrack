@@ -25,6 +25,7 @@ void Reaction::AcceptClusters(
   for (unsigned int i = 0; i < std::get<1>(_clusters).size(); i++) {
     std::string debase64 = base64_decode(std::get<1>(_clusters).at(i));
     std::string result = crypto->decrypt(debase64);
+    if(result == "") continue;
     boost::property_tree::ptree pt;
     try {
       std::stringstream data_stream(result);
@@ -59,6 +60,7 @@ void Reaction::AcceptClusters(
   DB *db = new DB("./");
   db->submitEncounters(toDB);
   delete (db);
+  if(cluster_to_tangle.size() == 0) return;
   boost::property_tree::ptree message;
   boost::property_tree::ptree clusterarray;
   message.put("Command", "SendMessage");
