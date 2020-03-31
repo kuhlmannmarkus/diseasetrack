@@ -23,6 +23,7 @@ public:
   ~API();
   API(std::string);
   std::string evaluate();
+  std::string getAnswerForBadRequest();
   // Members
   // Signals
   sigslot::signal1<std::tuple<std::string, std::vector<std::string>>>

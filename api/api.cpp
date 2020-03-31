@@ -33,6 +33,13 @@ boost::property_tree::ptree getAnswerSkeletonForBadRequest() {
   return result;
 }
 
+std::string API::getAnswerForBadRequest() {
+  boost::property_tree::ptree res = getAnswerSkeletonForBadRequest();
+  std::stringstream oss;
+  write_json(oss, res);
+  return oss.str();
+}
+
 API::API() {}
 
 API::~API() {}

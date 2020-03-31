@@ -12,7 +12,6 @@
 
 sigslot::signal3<std::string, std::string, std::string> LogMessage;
 sigslot::signal1<int> SendRunModeOrder;
-sigslot::signal1<std::vector<std::string>> SendZMQPatterns;
 
 static volatile bool killswitch = false;
 
@@ -49,14 +48,13 @@ int main(int argc, const char *argv[]) {
   }
   LogMessage.emit(identify(), "Shutting down...", "INFO");
   SendRunModeOrder.emit(0);
-  std::this_thread::sleep_for(std::chrono::seconds(1));
-  LogMessage.emit(identify(), "Finished.", "INFO");
   SendRunModeOrder.disconnect(ws);
   ws->LogMessage.disconnect(log);
   ws->ClustersDetected.disconnect(reaction);
   reaction->LogMessage.disconnect(log);
   delete (reaction);
   delete (ws);
+  LogMessage.emit(identify(), "Finished.", "INFO");
   LogMessage.disconnect(log);
   delete (log);
   return 0;

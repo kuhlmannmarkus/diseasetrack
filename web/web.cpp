@@ -68,7 +68,9 @@ std::thread *WS::startServer() {
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
                       << answer;
           } catch (const std::exception &e) {
-            answer = "API breach";
+	    API *empty = new API();
+	    answer = empty->getAnswerForBadRequest();
+	    delete(empty);
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: "
                       << answer.length() << "\r\n\r\n"
                       << answer;
@@ -103,7 +105,9 @@ std::thread *WS::startServer() {
                       << "Content-Length: " << answer.length() << "\r\n\r\n"
                       << answer;
           } catch (const std::exception &e) {
-            answer = "API breach";
+            API *empty = new API();
+            answer = empty->getAnswerForBadRequest();
+            delete(empty);
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: "
                       << answer.length() << "\r\n\r\n"
                       << answer;
