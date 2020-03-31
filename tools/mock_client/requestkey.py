@@ -15,6 +15,6 @@ x = {
     "Command": "RequestServerPubKey"
 }
 y = json.dumps(x)
-
+print(y)
 z = requests.post(url, data = y)
 print(z.text)

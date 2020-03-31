@@ -13,7 +13,7 @@ url = 'https://api.trackcovidcluster.de:12345/json'
 
 x = {
     "Command": "StatePoll",
-    "UUID": "CJnw5cqBJ153OTIka2tqDKWoOvBKqis2M+7zEj07WTM=",
+    "UUID": "dA07FmQ0ByvEiCK/6WvHnN27V78VKuHNgzPf3NFiHRk=",
 }
 
 y = json.dumps(x)
