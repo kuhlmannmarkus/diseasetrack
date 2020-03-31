@@ -35,7 +35,7 @@ int main(int argc, const char *argv[]) {
   Log *log = new Log();
   LogMessage.connect(log, &Log::AcceptLogMessage);
   LogMessage.emit(identify(), "Starting...", "INFO");
-  WS *ws = new WS(12345, "test", "./fullchain.pem", "./privkey.pem", "");
+  WS *ws = new WS(12345, "test");
   ws->LogMessage.connect(log, &Log::AcceptLogMessage);
   SendRunModeOrder.connect(dynamic_cast<DiseaseTrackObject *>(ws),
                            &DiseaseTrackObject::AcceptRunModeOrder);
