@@ -23,9 +23,13 @@ void Reaction::AcceptClusters(
   cluster_to_tangle.clear();
   Crypto *crypto = new Crypto();
   for (unsigned int i = 0; i < std::get<1>(_clusters).size(); i++) {
+    logMessage("Trying to decrypt: " + std::get<1>(_clusters).at(i), "INFO");
     std::string debase64 = base64_decode(std::get<1>(_clusters).at(i));
     std::string result = crypto->decrypt(debase64);
-    if(result == "") continue;
+    if(result == ""){
+      logMessage("Could not decrypt!", "ERR");
+      continue;
+    }
     boost::property_tree::ptree pt;
     try {
       std::stringstream data_stream(result);

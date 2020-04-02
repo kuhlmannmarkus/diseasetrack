@@ -53,6 +53,7 @@ std::thread *WS::startServer() {
                std::shared_ptr<SimpleWeb::Server<SimpleWeb::HTTPS>::Request>
                    request) {
           std::string answer;
+	  logMessage(request->content.string(), "INFO");
           try {
             boost::property_tree::ptree pt;
             read_json(request->content, pt);
@@ -90,6 +91,7 @@ std::thread *WS::startServer() {
                std::shared_ptr<SimpleWeb::Server<SimpleWeb::HTTP>::Request>
                    request) {
           std::string answer;
+	  logMessage(request->content.string(), "INFO");
           try {
             boost::property_tree::ptree pt;
             read_json(request->content, pt);
