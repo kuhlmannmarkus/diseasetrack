@@ -69,6 +69,8 @@ std::string Crypto::getPubKey() {
   line = "";
   std::getline(infile, line);
   infile.close();
+  std::string recipient_pk_s_debase = base64_decode(line);
+  std::cout << string_to_hex(recipient_pk_s_debase) << std::endl;
   return line;
 }
 
@@ -90,7 +92,7 @@ std::string Crypto::trunchash(std::string _in) {
   std::string digest;
   CryptoPP::SHA3_256 hash;
   hash.Update((const byte *)_in.data(), _in.size());
-  digest.resize(hash.DigestSize() / 2);
+  digest.resize(hash.DigestSize() / 4);
   hash.TruncatedFinal((byte *)&digest[0], digest.size());
   return string_to_hex(digest);
 }
@@ -99,7 +101,7 @@ std::string Crypto::trunchashbase64(std::string _in) {
   std::string digest;
   CryptoPP::SHA3_256 hash;
   hash.Update((const byte *)_in.data(), _in.size());
-  digest.resize(hash.DigestSize() / 2);
+  digest.resize(hash.DigestSize() / 4);
   hash.TruncatedFinal((byte *)&digest[0], digest.size());
   return base64_encode(reinterpret_cast<const unsigned char *>(digest.c_str()),
                        digest.length());
